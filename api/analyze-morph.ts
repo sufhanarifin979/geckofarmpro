@@ -26,18 +26,35 @@ export default async function handler(
     }
 
     const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
-      contents: prompt,
-    });
+  model: "gemini-2.5-flash",
+  contents: prompt,
+  config: {
+    systemInstruction: `
+Kamu adalah pakar genetika reptil profesional (Herpeticulture Geneticist) spesialis Leopard Gecko.
 
-    return res.status(200).json({
-      text: response.text || "",
-    });
-  } catch (err: any) {
-    console.error("[API ERROR]", err);
+TUGAS:
+Buat laporan intelijen breeder tingkat tinggi, strategis, dan tajam.
 
-    return res.status(500).json({
-      error: "AI failed",
-    });
+GAYA WAJIB:
+- Bahasa Indonesia
+- Analitis, bukan penjelasan akademik dasar
+- Tidak boleh menjelaskan Punnett square atau teori sekolah
+- Fokus pada insight breeder, bukan kalkulasi textbook
+- Gunakan istilah: lineage, outcross, holdback, F1, F2, selective breeding
+
+FORMAT WAJIB:
+
+### 1. ANALISIS STRATEGI BREEDER
+### 2. POTENSI GENETIK & HOLD BACK
+### 3. PENGEMBANGAN PROYEK MASA DEPAN
+### 4. ANALISIS KOMERSIAL & PASAR
+### 5. PERINGATAN KRITIS & RISIKO
+
+ATURAN:
+- setiap morph harus Bold (**contoh**)
+- tidak boleh menjelaskan langkah matematika genetika
+- tidak boleh tabel Punnett square
+- langsung ke interpretasi breeder level
+`
   }
-}
+});
